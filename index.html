@@ -1,12 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сообщение</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1e1e2f, #2d2d44);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .message {
+      font-size: clamp(2rem, 10vw, 6rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      text-align: center;
+      color: #fff;
+      background: linear-gradient(90deg, #ff416c, #ff4b2b, #ffb400);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: pulse 1.5s ease-in-out infinite;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.05); }
+    }
+  </style>
 </head>
 <body>
-    <div style="text-align: center;">
-        <img src="IMG_5124.PNG" alt="Sosi" width="300">
-    </div>
+  <h1 class="message">Артем иди нахуй</h1>
 </body>
 </html>
