@@ -1,48 +1,181 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Сообщение</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #1e1e2f, #2d2d44);
-      font-family: 'Segoe UI', Arial, sans-serif;
-      padding: 20px;
-    }
-
-    .message {
-      font-size: clamp(2rem, 10vw, 6rem);
-      font-weight: 900;
-      text-transform: uppercase;
-      text-align: center;
-      color: #fff;
-      background: linear-gradient(90deg, #ff416c, #ff4b2b, #ffb400);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: pulse 1.5s ease-in-out infinite;
-      letter-spacing: 0.05em;
-      line-height: 1.2;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50%      { transform: scale(1.05); }
-    }
-  </style>
-</head>
-<body>
-  <h1 class="message">Артем иди нахуй</h1>
-</body>
-</html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мед-Чек — Лекарственный анамнез</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .phone {
+    width: 390px;
+    height: 844px;
+    background: #f5f7fb;
+    border-radius: 48px;
+    box-shadow: 0 40px 80px rgba(30, 60, 120, 0.25), 0 0 0 12px #1a1a1a, 0 0 0 14px #333;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .notch {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 32px;
+    background: #000;
+    border-radius: 20px;
+    z-index: 100;
+  }
+  
+  .status-bar {
+    height: 50px;
+    padding: 14px 30px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .status-icons { display: flex; gap: 6px; align-items: center; }
+  
+  .screen {
+    height: calc(100% - 50px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    padding-bottom: 90px;
+    scrollbar-width: none;
+  }
+  .screen::-webkit-scrollbar { display: none; }
+  
+  .view { display: none; animation: fadeIn 0.3s ease; }
+  .view.active { display: block; }
+  
+  [club66008961|@keyframes] fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* ====== HEADER ====== */
+  .header {
+    padding: 10px 24px 20px;
+    background: linear-gradient(135deg, #2563eb 0%, #4f8cf7 100%);
+    color: white;
+    border-radius: 0 0 28px 28px;
+  }
+  
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  
+  .greeting { font-size: 13px; opacity: 0.9; }
+  .user-name { font-size: 22px; font-weight: 700; margin-top: 2px; }
+  
+  .avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 17px;
+    border: 2px solid rgba(255,255,255,0.4);
+  }
+  
+  .progress-card {
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  
+  .progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .progress-title { font-size: 14px; font-weight: 600; }
+  .progress-count { font-size: 13px; opacity: 0.9; }
+  
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #34d399);
+    border-radius: 10px;
+    transition: width 0.6s ease;
+  }
+  
+  /* ====== SECTIONS ====== */
+  .section {
+    padding: 20px 20px 0;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  
+  .section-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a1a1a;
+  }
+  
+  .section-link {
+    font-size: 13px;
+    color: #2563eb;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  /* ====== MEDICATION CARDS ====== */
+  .med-card {
+    background: white;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(30, 60, 120, 0.06);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid rgba(0,0,0,0.03);
+  }
+  
+  .med-card:active { transform: scale(0.98); }
+  
+  .med-icon {
+    width: 52px;
